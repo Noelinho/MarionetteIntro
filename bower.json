@@ -1,0 +1,27 @@
+{
+  "name": "intro_marionette",
+  "version": "0.0.0",
+  "authors": [
+    "Joaquín <jjtarrago@gmail.com>"
+  ],
+  "main": "main",
+  "keywords": [
+    "marionette"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "json2": "*",
+    "underscore": "~1.7",
+    "backbone": "~1.1.2",
+    "marionette": "~2.2.2"
+  }
+}
