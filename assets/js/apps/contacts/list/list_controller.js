@@ -10,7 +10,7 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
             });
 
             contactsListView.on('childview:contact:show', function(childview, model) {
-                ContactManager.ContactsApp.Show.Controller.showContact(model);
+                ContactManager.trigger('contact:show', model.get('id'));
             });
 
             ContactManager.mainRegion.show(contactsListView);

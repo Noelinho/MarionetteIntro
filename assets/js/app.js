@@ -18,8 +18,7 @@ ContactManager.on('start', function() {
         Backbone.history.start();
 
         if (this.getCurrentRoute() === "") {
-            this.navigate("contacts");
-            ContactManager.ContactsApp.List.Controller.listContacts();
+            ContactManager.trigger("contacts:list");
         }
     }
 });
