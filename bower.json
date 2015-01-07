@@ -22,6 +22,7 @@
     "json2": "*",
     "underscore": "~1.7",
     "backbone": "~1.1.2",
-    "marionette": "~2.2.2"
+    "marionette": "~2.2.2",
+    "backbone.localStorage": "~1.1"
   }
 }
