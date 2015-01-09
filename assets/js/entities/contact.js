@@ -2,18 +2,18 @@ ContactManager.module("Entities", function(Entities, ContactManager, Backbone, M
     var contacts;
 
     Entities.Contact = Backbone.Model.extend({
-        urlRoot: "contacts"
+        localStorage: new Backbone.LocalStorage("contacts")
     });
 
-    Entities.configureStorage(Entities.Contact);
+    //Entities.configureStorage(Entities.Contact);
 
     Entities.ContactCollection = Backbone.Collection.extend({
-        url: "contacts",
+        localStorage: new Backbone.LocalStorage("contacts"),
         model: Entities.Contact,
         comparator: "lastName"
     });
 
-    Entities.configureStorage(Entities.ContactCollection);
+    //Entities.configureStorage(Entities.ContactCollection);
 
     var initializeContacts = function() {
         contacts = new Entities.ContactCollection([
@@ -47,26 +47,51 @@ ContactManager.module("Entities", function(Entities, ContactManager, Backbone, M
             contact.save();
         });
 
-        return contacts;
+        return contacts.models;
     };
 
     var API = {
         getContactEntities: function() {
             var contacts = new Entities.ContactCollection();
-            contacts.fetch();
+            var defer = $.Deferred();
 
-            if (contacts.length == 0) {
-                return initializeContacts();
-            }
+            setTimeout(function() {
+                contacts.fetch({
+                    success: function(data) {
+                        defer.resolve(data);
+                    }
+                })
+            },2000);
 
-            return contacts;
+            var promise = defer.promise();
+
+            $.when(promise).done(function(contacts) {
+                if (contacts.length == 0) {
+                    var models = initializeContacts();
+                    contacts.reset(models);
+                }
+            });
+
+            return promise;
         },
 
         getContactEntity: function(id) {
             var contact = new Entities.Contact({id: id});
-            contact.fetch();
+            var defer = $.Deferred();
 
-            return contact;
+            setTimeout(function() {
+                contact.fetch({
+                    success: function(data) {
+                        defer.resolve(data);
+                    },
+                    error: function(data) {
+                        defer.resolve(undefined);
+                    }
+                });
+            }, 2000);
+
+
+            return defer.promise();
         }
     };
 
