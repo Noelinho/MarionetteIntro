@@ -2,7 +2,26 @@ ContactManager.module("Entities", function(Entities, ContactManager, Backbone, M
     var contacts;
 
     Entities.Contact = Backbone.Model.extend({
-        localStorage: new Backbone.LocalStorage("contacts")
+        localStorage: new Backbone.LocalStorage("contacts"),
+        validate: function(attrs, options) {
+            var errors = {};
+            if (!attrs.firstName) {
+                errors.firstName = "Es obligatorio tener nombre";
+            }
+
+            if (!attrs.lastName) {
+                errors.lastName = "Es obligatorio tener apellidos";
+            } else {
+                if (attrs.lastName.length < 2) {
+                    errors.lastName = "Apellido demasiado corto";
+                }
+            }
+
+            if (!_.isEmpty(errors)) {
+                return errors;
+            }
+
+        }
     });
 
     //Entities.configureStorage(Entities.Contact);

@@ -9,6 +9,10 @@ ContactManager.module("ContactsApp.Show", function(Show, ContactManager, Backbon
             $.when(fetchingContact).done(function(contact) {
                 var showViewContact = new Show.Contact({model:contact});
 
+                showViewContact.on('contact:edit', function (contact) {
+                    ContactManager.trigger('contact:edit', contact.get('id'));
+                });
+
                 if (contact === undefined) {
                     showViewContact = new Show.MissingContact();
                 }
