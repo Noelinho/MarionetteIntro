@@ -8,7 +8,10 @@ ContactManager.module("ContactsApp.Edit", function(Edit, ContactManager, Backbon
             $.when(fetchingContact).done(function(contact) {
                 var view;
 
-                view = new Edit.Contact({model: contact});
+                view = new Edit.Contact({
+                    model: contact,
+                    asModal: false
+                });
 
                 view.on('form:submit', function(data) {
                     if (contact.save(data)) {
